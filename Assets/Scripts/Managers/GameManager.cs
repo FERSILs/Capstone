@@ -6,6 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     private HashSet<string> flags = new HashSet<string>();
+    public bool IsInDialogue { get; private set; } = false;
+
+    float inputBlockedUntil = 0f;
+    public bool IsInputBlocked => IsInDialogue || Time.time < inputBlockedUntil;
 
     private void Awake()
     {
@@ -29,5 +33,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log($"[GameManager] Flag set: {key}");
         }
+    }
+    public void SetDialogueState(bool state)
+    {
+        IsInDialogue = state;
+    }
+    public void BlockInputFor(float seconds)
+    {
+        inputBlockedUntil = Mathf.Max(inputBlockedUntil, Time.time + seconds);
     }
 }

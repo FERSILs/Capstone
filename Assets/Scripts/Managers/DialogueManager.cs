@@ -27,6 +27,9 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        // 대화 시작 시 상태 변경
+        GameManager.Instance.SetDialogueState(true);
+
         // UI 열기
         DialogueUI.Instance.OpenDialogue(data.npcID, activeLines[index]);
     }
@@ -69,7 +72,10 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
+        // 대화 종료 시 상태 해제
+        GameManager.Instance.SetDialogueState(false);
         DialogueUI.Instance.CloseDialogue();
+        GameManager.Instance.BlockInputFor(0.15f);
         currentData = null;
         activeLines = null;
         index = 0;

@@ -34,6 +34,11 @@ namespace PlayerSystem
 
         private void Update()
         {
+            if (GameManager.Instance != null && GameManager.Instance.IsInputBlocked)
+            {
+                rigid.linearVelocity = Vector2.zero;
+                return;
+            }
             inputVec.x = Input.GetAxisRaw("Horizontal");
             inputVec.y = Input.GetAxisRaw("Vertical");
 
