@@ -1,15 +1,12 @@
 using UnityEngine;
-using System.Collections.Generic;
+// using System.Collections.Generic; // HashSet이 필요 없으므로 삭제
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private HashSet<string> flags = new HashSet<string>();
-    public bool IsInDialogue { get; private set; } = false;
-
-    float inputBlockedUntil = 0f;
-    public bool IsInputBlocked => IsInDialogue || Time.time < inputBlockedUntil;
+    // --- IsInDialogue, IsInputBlocked, flags 등 모든 변수와 함수 삭제 ---
+    // (InputManager와 FlagManager로 기능이 이전되었습니다)
 
     private void Awake()
     {
@@ -17,7 +14,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            // 필요하면 여기서 저장 로드(PlayerPrefs/JSON) 연동
         }
         else
         {
@@ -25,21 +21,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool CheckFlag(string key) => flags.Contains(key);
-
-    public void SetFlag(string key)
-    {
-        if (flags.Add(key))
-        {
-            Debug.Log($"[GameManager] Flag set: {key}");
-        }
-    }
-    public void SetDialogueState(bool state)
-    {
-        IsInDialogue = state;
-    }
-    public void BlockInputFor(float seconds)
-    {
-        inputBlockedUntil = Mathf.Max(inputBlockedUntil, Time.time + seconds);
-    }
+    // (추후 여기에 LoadScene(), SaveGame(), GameOver() 등이 추가됩니다)
 }

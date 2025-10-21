@@ -34,7 +34,8 @@ namespace PlayerSystem
 
         private void Update()
         {
-            if (GameManager.Instance != null && GameManager.Instance.IsInputBlocked)
+            //if (GameManager.Instance != null && GameManager.Instance.IsInputBlocked)
+            if (InputManager.Instance != null && InputManager.Instance.IsInputBlocked) // 수정된 코드
             {
                 rigid.linearVelocity = Vector2.zero;
                 return;

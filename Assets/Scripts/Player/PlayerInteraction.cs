@@ -8,7 +8,14 @@ namespace PlayerSystem
         public float interactRange = 1.5f;   // 정면 Ray 거리
         public float pickupRange = 1.2f;     // 주변 탐색 거리
 
+        [Header("Layer Settings")]
+        [Tooltip("상호작용(F키)이 가능한 레이어들을 선택합니다.")]
+        public LayerMask interactableLayer;
+        [Tooltip("아이템 줍기(F키)가 가능한 레이어들을 선택합니다.")]
+        public LayerMask pickupLayer;
+
         private PlayerController controller;
+        private PlayerHealth playerHealth;
 
         // 디버그 표시용 변수
         private Vector2 lastRayDir = Vector2.zero;
@@ -18,6 +25,7 @@ namespace PlayerSystem
         private void Awake()
         {
             controller = GetComponent<PlayerController>();
+            playerHealth = GetComponent<PlayerHealth>();
         }
 
         private void Update()
@@ -38,7 +46,7 @@ namespace PlayerSystem
             Debug.Log($"[TryInteract] Ray 방향: {dir}, 거리: {interactRange}");
 
             //  정면 Raycast (NPC, 문 등)
-            RaycastHit2D hitFront = Physics2D.Raycast(pos, dir, interactRange, LayerMask.GetMask("Interactable"));
+            RaycastHit2D hitFront = Physics2D.Raycast(pos, dir, interactRange, interactableLayer);
             if (hitFront.collider != null)
             {
                 hitSomething = true;
@@ -46,28 +54,29 @@ namespace PlayerSystem
 
                 Debug.Log($"정면 감지됨: {hitFront.collider.name}");
 
-                var interactable = hitFront.collider.GetComponent<IInteractable>();
+                var interactable = hitFront.collider.GetComponentInParent<IInteractable>();
+
                 if (interactable != null)
                 {
-                    interactable.OnInteract();
-                    return; //  상호작용 성공 → 함수 종료
+                    interactable.Interact(this, playerHealth);
+                    return;
                 }
 
-                return; //  감지는 됐지만 인터페이스가 없을 때도 종료
+                return;
             }
 
-            // 2 주변 아이템 탐색 (Pickup Layer)
-            Collider2D[] hitAround = Physics2D.OverlapCircleAll(pos, pickupRange, LayerMask.GetMask("Pickup"));
+            //  주변 아이템 탐색 (Pickup Layer)
+            Collider2D[] hitAround = Physics2D.OverlapCircleAll(pos, pickupRange, pickupLayer);
             foreach (var col in hitAround)
             {
                 hitSomething = true;
                 hitName = col.name;
 
-                var pickup = col.GetComponent<IPickup>();
+                var pickup = col.GetComponentInParent<IPickup>();
                 if (pickup != null)
                 {
-                    pickup.OnPickup();
-                    return; //  아이템 획득 후 종료
+                    pickup.Pickup(this);
+                    return;
                 }
             }
 
@@ -84,16 +93,13 @@ namespace PlayerSystem
             if (!Application.isPlaying || controller == null)
                 return;
 
-            // Ray 색상 (빨강 = 감지 X / 초록 = 감지 O)
             Gizmos.color = hitSomething ? Color.green : Color.red;
             Gizmos.DrawRay(transform.position, lastRayDir * interactRange);
 
-            // Pickup 감지 원 (노랑 투명)
             Gizmos.color = new Color(1f, 1f, 0f, 0.3f);
             Gizmos.DrawWireSphere(transform.position, pickupRange);
 
 #if UNITY_EDITOR
-            // Scene 뷰에 감지된 오브젝트 이름 표시
             if (hitSomething && !string.IsNullOrEmpty(hitName))
             {
                 UnityEditor.Handles.Label(
