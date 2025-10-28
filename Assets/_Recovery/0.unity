@@ -2397,7 +2397,7 @@ GameObject:
   - component: {fileID: 913314279}
   - component: {fileID: 913314278}
   m_Layer: 0
-  m_Name: Pattern_1
+  m_Name: Pattern_!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2852,7 +2852,7 @@ GameObject:
   - component: {fileID: 1101260351}
   - component: {fileID: 1101260352}
   m_Layer: 0
-  m_Name: ArmLeft
+  m_Name: ArdLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2945,11 +2945,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882823cae826be240afda2c497f23d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHand
-  handType: 0
+  handType: 1
   warningPrefab: {fileID: 1473999282}
   warningTime: 1
   attackTime: 0.3
-  returnTime: 0.5
   liftAngle: 45
   smashAngle: -60
 --- !u!1 &1110311472
@@ -4969,14 +4968,13 @@ Transform:
   m_GameObject: {fileID: 1412790647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.22, y: 2.68, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1277580488}
   - {fileID: 293288837}
   - {fileID: 913314279}
-  - {fileID: 1436930021}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1412790649
@@ -4995,58 +4993,6 @@ MonoBehaviour:
   rightHand: {fileID: 1753660731}
   patterns:
   - {fileID: 913314278}
-  - {fileID: 1436930022}
---- !u!1 &1436930020
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1436930021}
-  - component: {fileID: 1436930022}
-  m_Layer: 0
-  m_Name: Pattern_2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1436930021
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436930020}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1412790648}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1436930022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436930020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e48362a9f4c336a45838ea6dfe28d89e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pattern2_ClapSmash
-  spreadAngle: 60
-  spreadTime: 0.5
-  smashTime: 0.4
-  returnTime: 0.5
-  delayBeforeSmash: 0.4
-  delayAfter: 1.2
-  impactEffect: {fileID: 0}
 --- !u!1 &1473999282
 GameObject:
   m_ObjectHideFlags: 0
@@ -5535,7 +5481,6 @@ MonoBehaviour:
   warningPrefab: {fileID: 1473999282}
   warningTime: 1
   attackTime: 0.3
-  returnTime: 0.5
   liftAngle: 45
   smashAngle: -60
 --- !u!1 &1845661424
