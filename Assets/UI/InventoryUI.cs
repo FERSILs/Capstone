@@ -73,6 +73,8 @@ public class InventoryUI : MonoBehaviour
         bool isActive = !inventoryPanel.activeSelf;
         inventoryPanel.SetActive(isActive);
 
+        InputManager.Instance.SetInventoryState(isActive);
+
         // NEXT_STEPS.md D항목: 인벤토리 열 때 게임 일시정지 (선택 사항)
         // Time.timeScale = isActive ? 0f : 1f;
 

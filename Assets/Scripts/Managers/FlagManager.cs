@@ -1,15 +1,14 @@
 // FlagManager.cs
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq; // (List 변환을 위해 추가)
 
-/// <summary>
-/// 게임의 모든 플래그(이벤트 완료 여부)를 저장하고 관리합니다.
-/// </summary>
 public class FlagManager : MonoBehaviour
 {
     public static FlagManager Instance;
 
-    private HashSet<string> flags = new HashSet<string>();
+    // (수정) private -> public (DataManager가 접근해야 함)
+    public HashSet<string> flags = new HashSet<string>();
 
     private void Awake()
     {
@@ -24,14 +23,8 @@ public class FlagManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 해당 플래그가 저장되었는지 확인합니다.
-    /// </summary>
     public bool CheckFlag(string key) => flags.Contains(key);
 
-    /// <summary>
-    /// 새로운 플래그를 저장합니다.
-    /// </summary>
     public void SetFlag(string key)
     {
         if (flags.Add(key))
@@ -40,5 +33,23 @@ public class FlagManager : MonoBehaviour
         }
     }
 
-    // (참고: 추후 여기에 SaveFlags(), LoadFlags() 함수를 만들면 됩니다.)
+    // ▼▼▼▼▼ 추가된 함수 ▼▼▼▼▼
+
+    /// <summary>
+    /// (DataManager용) 저장할 플래그 리스트를 반환합니다.
+    /// </summary>
+    public List<string> GetFlags()
+    {
+        return flags.ToList(); // HashSet을 List로 변환하여 반환
+    }
+
+    /// <summary>
+    /// (DataManager용) 로드된 플래그 리스트로 덮어씁니다.
+    /// </summary>
+    public void LoadFlags(List<string> loadedFlags)
+    {
+        flags = new HashSet<string>(loadedFlags);
+        Debug.Log($"[FlagManager] 플래그 {flags.Count}개 로드됨.");
+    }
+    // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 }

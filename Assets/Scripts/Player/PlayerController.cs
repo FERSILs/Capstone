@@ -25,19 +25,31 @@ namespace PlayerSystem
         private bool canRoll = true;
         public bool isInvincible { get; private set; } = false;
 
+        // ▼▼▼▼▼ 추가된 변수 ▼▼▼▼▼
+        private float rollStartTime;  // 구르기 시작 시간
+        private float totalRollTime;  // (구르기 + 쿨타임) 총 시간
+        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
         private void Awake()
         {
             rigid = GetComponent<Rigidbody2D>();
             rigid.gravityScale = 0f;
             rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+            // ▼▼▼▼▼ 추가된 줄 ▼▼▼▼▼
+            // 구르기 지속시간 + 쿨타임을 합친 총 시간을 미리 계산
+            totalRollTime = rollDuration + rollCooldown;
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
         }
 
         private void Update()
         {
-            //if (GameManager.Instance != null && GameManager.Instance.IsInputBlocked)
-            if (InputManager.Instance != null && InputManager.Instance.IsInputBlocked) // 수정된 코드
+            // (입력 처리)
+            if (InputManager.Instance != null && InputManager.Instance.IsInputBlocked)
             {
                 rigid.linearVelocity = Vector2.zero;
+                inputVec = Vector2.zero;
+                UpdateRollUI(); // (추가) 입력이 잠겨도 UI는 갱신
                 return;
             }
             inputVec.x = Input.GetAxisRaw("Horizontal");
@@ -47,8 +59,37 @@ namespace PlayerSystem
                 lastMoveDir = inputVec.normalized;
 
             if (Input.GetKeyDown(KeyCode.Space) && canRoll && inputVec != Vector2.zero)
+            {
+                // (수정) 코루틴 시작과 동시에 시간 기록
+                rollStartTime = Time.time;
                 StartCoroutine(Roll());
+            }
+
+            // (추가) 구르기 쿨타임 UI 갱신 로직
+            UpdateRollUI();
         }
+
+        // ▼▼▼▼▼ 추가된 함수 ▼▼▼▼▼
+        /// <summary>
+        /// 구르기 쿨타임 UI를 매 프레임 갱신합니다.
+        /// </summary>
+        private void UpdateRollUI()
+        {
+            if (PlayerHUD.Instance == null) return;
+
+            if (canRoll)
+            {
+                // 구르기 가능: 쿨타임 바 100%
+                PlayerHUD.Instance.UpdateRollCooldown(1f);
+            }
+            else
+            {
+                // 구르기/쿨타임 진행 중: (현재시간 - 시작시간) / 총 시간
+                float progress = (Time.time - rollStartTime) / totalRollTime;
+                PlayerHUD.Instance.UpdateRollCooldown(Mathf.Clamp01(progress));
+            }
+        }
+        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
         private void FixedUpdate()
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New ItemData", menuName = "Data/Item Data")]
 public class ItemData : ScriptableObject
 {
-    [Header("기본 정보")]
+    [Header("Basic Info")]
     public string itemName; // 아이템 이름 (툴팁용)
 
     [TextArea]
@@ -13,12 +13,16 @@ public class ItemData : ScriptableObject
 
     public Sprite icon; // 인벤토리 UI에 표시될 아이콘
 
-    [Header("타입 (참고용)")]
+    [Header("Item Type")]
     // (기획안의 3번 항목: 보스 드랍템)
     // (기획안의 A항목: 소모품, 열쇠 등)
     public ItemType itemType;
 
-    [Header("인벤토리 관리")]
+    [Header("Key Item Settings")]
+    [Tooltip("If itemType is 'Key', this ID must match the door's ID")]
+    public string keyID = ""; // 예: "BossRoomKey"
+
+    [Header("Inventory Management")]
     public bool isStackable = true; // 겹치기 가능 여부
 
     [Range(1, 999)]
