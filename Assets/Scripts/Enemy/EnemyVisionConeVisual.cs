@@ -3,11 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class EnemyVisionConeVisual : MonoBehaviour
 {
-    [Header("링크 (필수)")]
-    public Enemy enemyAI; // 부모 오브젝트의 Enemy.cs
+    [Header("占쏙옙크 (占십쇽옙)")]
+    public Enemy enemyAI;
 
-    [Header("시각화 품질")]
-    public int rayCount = 30; // 원뿔을 몇 개의 삼각형으로 그릴지
+    [Header("占시곤옙화 품占쏙옙")]
+    public int rayCount = 30;
 
     private MeshFilter meshFilter;
     private Mesh mesh;
@@ -20,13 +20,9 @@ public class EnemyVisionConeVisual : MonoBehaviour
         mesh = new Mesh();
         meshFilter.mesh = mesh;
 
-        // ▼▼▼▼▼ 수정된 부분 ▼▼▼▼▼
-        // MeshRenderer의 그리기 순서를 스크립트로 직접 설정합니다.
-        meshRenderer.sortingLayerName = "Default"; // 땅, 플레이어와 동일한 레이어
-        meshRenderer.sortingOrder = 4; // 땅(0)보다는 위, 몬스터(5)보다는 아래
-                                       // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+        meshRenderer.sortingLayerName = "Default";
+        meshRenderer.sortingOrder = 4;
 
-        // 처음엔 숨김
         meshRenderer.enabled = false;
     }
 
@@ -34,7 +30,6 @@ public class EnemyVisionConeVisual : MonoBehaviour
     {
         if (enemyAI == null) return;
 
-        // 'Chase' 또는 'Alert' 상태일 때만 시야각 표시
         if (enemyAI.currentState == Enemy.EnemyState.Chase || enemyAI.currentState == Enemy.EnemyState.Alert)
         {
             if (!meshRenderer.enabled) meshRenderer.enabled = true;
@@ -46,7 +41,6 @@ public class EnemyVisionConeVisual : MonoBehaviour
         }
     }
 
-    // DrawVisionCone 함수는 동일 (생략)
     void DrawVisionCone()
     {
         float fov = enemyAI.visionAngle;

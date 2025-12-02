@@ -5,7 +5,7 @@ using PlayerSystem;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
-    // 1. FSM »óÅÂ Á¤ÀÇ
+    // 1. FSM ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public enum EnemyState
     {
         Idle,
@@ -21,9 +21,9 @@ public class Enemy : MonoBehaviour
     public float returnSpeed = 3.8f;
 
     [Header("Rotation")]
-    [Tooltip("ÀûÀÇ ±âº» ½ºÇÁ¶óÀÌÆ®°¡ À§(Up)¸¦ º¸´ÂÁö, ¿À¸¥ÂÊ(Right)À» º¸´ÂÁö")]
-    public bool isFacingUp = true; // (Áß¿ä) 'transform.up'À» Á¤¸éÀ¸·Î »ç¿ë
-    private float startRotation; // (Ãß°¡) ¿ø·¡ ¹Ù¶óº¸´ø °¢µµ
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½(Up)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(Right)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public bool isFacingUp = true; // (ï¿½ß¿ï¿½) 'transform.up'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    private float startRotation; // (ï¿½ß°ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     [Header("Vision Settings (3.2)")]
     public float visionRadius = 3.0f;
@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
     public float contactDamageCooldown = 0.6f;
     private float lastDamageTime = -1f;
 
-    // ÄÄÆ÷³ÍÆ® ¹× À§Ä¡
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ ï¿½ï¿½Ä¡
     private Rigidbody2D rigid;
     private Vector2 startPosition;
     private Transform playerTransform;
@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         startPosition = transform.position;
-        startRotation = rigid.rotation; // (Ãß°¡) ½ÃÀÛ °¢µµ ÀúÀå
+        startRotation = rigid.rotation; // (ï¿½ß°ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         if (playerLayer == 0) playerLayer = LayerMask.GetMask("Player");
         if (obstacleLayer == 0) obstacleLayer = LayerMask.GetMask("Walls");
@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine(VisionCheckCoroutine());
     }
 
-    // (VisionCheckCoroutine, CheckForPlayer ÇÔ¼ö´Â µ¿ÀÏ... )
+    // (VisionCheckCoroutine, CheckForPlayer ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½... )
     #region Vision Checks
     private IEnumerator VisionCheckCoroutine()
     {
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
         Transform target = hits[0].transform;
         Vector2 dirToTarget = (target.position - transform.position).normalized;
 
-        // (¼öÁ¤) isFacingUp º¯¼ö¿¡ µû¶ó Á¤¸é ¹æÇâ º¤ÅÍ¸¦ °¡Á®¿È
+        // (ï¿½ï¿½ï¿½ï¿½) isFacingUp ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Vector2 forward = isFacingUp ? (Vector2)transform.up : (Vector2)transform.right;
 
         if (Vector2.Angle(forward, dirToTarget) < visionAngle / 2)
@@ -130,18 +130,18 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        // ¡å¡å¡å¡å¡å FSM È¸Àü ·ÎÁ÷ ÀüÃ¼ ¼öÁ¤ ¡å¡å¡å¡å¡å
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ FSM È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         switch (currentState)
         {
             case EnemyState.Idle:
                 rigid.linearVelocity = Vector2.zero;
-                // (¼±ÅÃ »çÇ×) ÃµÃµÈ÷ ¿ø·¡ °¢µµ·Î µ¹¾Æ°¡°Ô ÇÒ ¼öµµ ÀÖÀ½
+                // (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ÃµÃµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 // rigid.rotation = Mathf.LerpAngle(rigid.rotation, startRotation, Time.fixedDeltaTime * 2f);
                 break;
 
             case EnemyState.Alert:
-                rigid.linearVelocity = Vector2.zero; // ¸ØÃç¼­
-                RotateTowards(playerTransform.position); // ÇÃ·¹ÀÌ¾î¸¦ ¹Ù¶óº½
+                rigid.linearVelocity = Vector2.zero; // ï¿½ï¿½ï¿½ç¼­
+                RotateTowards(playerTransform.position); // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½Ù¶ï¿½
 
                 if (Time.time - stateEnterTime >= alertDuration)
                 {
@@ -154,11 +154,11 @@ public class Enemy : MonoBehaviour
                 {
                     Vector2 dir = (playerTransform.position - transform.position).normalized;
                     rigid.linearVelocity = dir * chaseSpeed;
-                    RotateTowards(playerTransform.position); // ÀÌµ¿ÇÏ¸é¼­ °è¼Ó ¹Ù¶óº½
+                    RotateTowards(playerTransform.position); // ï¿½Ìµï¿½ï¿½Ï¸é¼­ ï¿½ï¿½ï¿½ ï¿½Ù¶ï¿½
                 }
                 else
                 {
-                    rigid.linearVelocity = Vector2.zero; // Å¸°Ù Á¤º¸ ¾øÀ¸¸é ÀÏ´Ü Á¤Áö
+                    rigid.linearVelocity = Vector2.zero; // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
                 }
 
                 if (Time.time - lastTimePlayerSeen > chaseLingerTime)
@@ -174,13 +174,13 @@ public class Enemy : MonoBehaviour
                 {
                     Vector2 dir = (startPosition - (Vector2)transform.position).normalized;
                     rigid.linearVelocity = dir * returnSpeed;
-                    RotateTowards(startPosition); // º¹±Í ÁöÁ¡À» ¹Ù¶óº¸¸ç ÀÌµ¿
+                    RotateTowards(startPosition); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸¸ï¿½ ï¿½Ìµï¿½
                 }
                 else
                 {
-                    // º¹±Í ¿Ï·á
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
                     rigid.linearVelocity = Vector2.zero;
-                    rigid.rotation = startRotation; // °¢µµ ÃÊ±âÈ­
+                    rigid.rotation = startRotation; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                     ChangeState(EnemyState.Idle);
                 }
                 break;
@@ -192,26 +192,26 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// (½Å±Ô ÇÔ¼ö) Æ¯Á¤ À§Ä¡¸¦ ¹Ù¶óº¸µµ·Ï RigidbodyÀÇ °¢µµ¸¦ Á¶ÀýÇÕ´Ï´Ù.
+    /// (ï¿½Å±ï¿½ ï¿½Ô¼ï¿½) Æ¯ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ù¶óº¸µï¿½ï¿½ï¿½ Rigidbodyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     /// </summary>
     private void RotateTowards(Vector2 targetPosition)
     {
         Vector2 dir = (targetPosition - (Vector2)transform.position).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        // (Áß¿ä) isFacingUpÀÌ trueÀÌ¸é 90µµ¸¦ »©¼­ 'transform.up'ÀÌ Á¤¸éÀÌ µÇµµ·Ï º¸Á¤
+        // (ï¿½ß¿ï¿½) isFacingUpï¿½ï¿½ trueï¿½Ì¸ï¿½ 90ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 'transform.up'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (isFacingUp)
         {
             angle -= 90f;
         }
 
-        // (¼±ÅÃ »çÇ×) ºÎµå·´°Ô È¸Àü
+        // (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½Îµå·´ï¿½ï¿½ È¸ï¿½ï¿½
         rigid.rotation = Mathf.LerpAngle(rigid.rotation, angle, Time.fixedDeltaTime * 10f);
-        // (Áï½Ã È¸Àü)
+        // (ï¿½ï¿½ï¿½ È¸ï¿½ï¿½)
         // rigid.rotation = angle; 
     }
 
-    // (OnCollisionEnter2D, RespawnCoroutine, ChangeState ÇÔ¼ö´Â µ¿ÀÏ...)
+    // (OnCollisionEnter2D, RespawnCoroutine, ChangeState ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½...)
     #region Combat & State
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -241,7 +241,7 @@ public class Enemy : MonoBehaviour
         rigid.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(respawnTime);
         transform.position = startPosition;
-        rigid.rotation = startRotation; // °¢µµ ÃÊ±âÈ­
+        rigid.rotation = startRotation; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         physicsCollider.enabled = true;
         spriteRenderer.enabled = true;
         ChangeState(EnemyState.Idle);

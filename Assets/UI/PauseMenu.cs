@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro; // (Ãß°¡) TextMeshPro¸¦ »ç¿ëÇÏ±â À§ÇØ
-using System.Collections.Generic; // (List »ç¿ë ½Ã ÇÊ¿äÇÒ ¼ö ÀÖÀ½)
+using TMPro; // (ï¿½ß°ï¿½) TextMeshProï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½
+using System.Collections.Generic; // (List ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
 public class PauseMenu : MonoBehaviour
 {
@@ -12,17 +12,17 @@ public class PauseMenu : MonoBehaviour
     public GameObject saveSlotPanel;
     public GameObject loadSlotPanel;
 
-    // ¡å¡å¡å¡å¡å Ãß°¡µÈ ºÎºÐ ¡å¡å¡å¡å¡å
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [Header("Slot Display Texts (Size = 3)")]
-    [Tooltip("SaveSlotPanelÀÇ ¾À ÀÌ¸§ ÅØ½ºÆ® 3°³")]
+    [Tooltip("SaveSlotPanelï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½Ø½ï¿½Æ® 3ï¿½ï¿½")]
     public TextMeshProUGUI[] saveSlotSceneTexts;
-    [Tooltip("SaveSlotPanelÀÇ ½Ã°£ ÅØ½ºÆ® 3°³")]
+    [Tooltip("SaveSlotPanelï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½Ø½ï¿½Æ® 3ï¿½ï¿½")]
     public TextMeshProUGUI[] saveSlotTimeTexts;
-    [Tooltip("LoadSlotPanelÀÇ ¾À ÀÌ¸§ ÅØ½ºÆ® 3°³")]
+    [Tooltip("LoadSlotPanelï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½Ø½ï¿½Æ® 3ï¿½ï¿½")]
     public TextMeshProUGUI[] loadSlotSceneTexts;
-    [Tooltip("LoadSlotPanelÀÇ ½Ã°£ ÅØ½ºÆ® 3°³")]
+    [Tooltip("LoadSlotPanelï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½Ø½ï¿½Æ® 3ï¿½ï¿½")]
     public TextMeshProUGUI[] loadSlotTimeTexts;
-    // ¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private bool isPaused = false;
 
@@ -83,7 +83,7 @@ public class PauseMenu : MonoBehaviour
 
     // --- (UI Button OnClick() Events) ---
 
-    // (1) ¸ÞÀÎ ¸Þ´º ¹öÆ°
+    // (1) ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½Æ°
     public void OnContinueButton()
     {
         TogglePauseMenu();
@@ -91,18 +91,18 @@ public class PauseMenu : MonoBehaviour
 
     public void OnOpenSavePanelButton()
     {
-        // ¡å¡å¡å¡å¡å ¼öÁ¤µÈ ºÎºÐ ¡å¡å¡å¡å¡å
-        UpdateSlotDisplay(); // (Ãß°¡) ÆÐ³Î ¿­±â Àü ÅØ½ºÆ® °»½Å
-        // ¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        UpdateSlotDisplay(); // (ï¿½ß°ï¿½) ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         pauseMenuPanel.SetActive(false);
         saveSlotPanel.SetActive(true);
     }
 
     public void OnOpenLoadPanelButton()
     {
-        // ¡å¡å¡å¡å¡å ¼öÁ¤µÈ ºÎºÐ ¡å¡å¡å¡å¡å
-        UpdateSlotDisplay(); // (Ãß°¡) ÆÐ³Î ¿­±â Àü ÅØ½ºÆ® °»½Å
-        // ¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        UpdateSlotDisplay(); // (ï¿½ß°ï¿½) ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         pauseMenuPanel.SetActive(false);
         loadSlotPanel.SetActive(true);
     }
@@ -112,12 +112,12 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
     }
 
-    // (2) ÀúÀå/·Îµå ½½·Ô ÆÐ³Î ¹öÆ°
+    // (2) ï¿½ï¿½ï¿½ï¿½/ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ ï¿½ï¿½Æ°
 
     public void OnSaveSlotClicked(int slotIndex)
     {
         DataManager.Instance.SaveGame(slotIndex);
-        Debug.Log($"Slot {slotIndex}¿¡ ÀúÀå ¿Ï·á.");
+        Debug.Log($"Slot {slotIndex}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½.");
         TogglePauseMenu();
     }
 
@@ -138,20 +138,20 @@ public class PauseMenu : MonoBehaviour
         pauseMenuPanel.SetActive(true);
     }
 
-    // ¡å¡å¡å¡å¡å Ãß°¡µÈ ÇÔ¼ö ¡å¡å¡å¡å¡å
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// <summary>
-    /// ¸ðµç ÀúÀå/·Îµå ½½·ÔÀÇ UI ÅØ½ºÆ®¸¦ °»½ÅÇÕ´Ï´Ù.
+    /// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI ï¿½Ø½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     /// </summary>
     private void UpdateSlotDisplay()
     {
-        // 3°³ÀÇ ½½·Ô (0, 1, 2)À» ¼øÈ¸
+        // 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (0, 1, 2)ï¿½ï¿½ ï¿½ï¿½È¸
         for (int i = 0; i < 3; i++)
         {
             GameSaveData info = DataManager.Instance.GetSaveDataInfo(i);
 
             if (info != null)
             {
-                // ÀúÀå µ¥ÀÌÅÍ°¡ ÀÖÀ½
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (saveSlotSceneTexts[i] != null) saveSlotSceneTexts[i].text = info.sceneName;
                 if (saveSlotTimeTexts[i] != null) saveSlotTimeTexts[i].text = info.saveTime;
 
@@ -160,7 +160,7 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                // ºó ½½·Ô
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (saveSlotSceneTexts[i] != null) saveSlotSceneTexts[i].text = "Empty Slot";
                 if (saveSlotTimeTexts[i] != null) saveSlotTimeTexts[i].text = "--:--";
 
@@ -169,5 +169,5 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-    // ¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã¡ã
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }

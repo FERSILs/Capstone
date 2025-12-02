@@ -1,0 +1,4 @@
+# .gitattributes
+# 이 설정은 .cs 파일이 항상 UTF-8 (BOM)으로 처리되도록 Git에 알려줍니다.
+*.cs text eol=crlf encoding=utf-8-bom
+*.cs text=auto

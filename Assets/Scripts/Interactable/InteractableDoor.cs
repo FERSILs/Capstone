@@ -1,7 +1,7 @@
 // InteractableDoor.cs
 using UnityEngine;
 using PlayerSystem;
-using UnityEngine.SceneManagement; // (Áß¿ä) ¾À °ü¸®¸¦ À§ÇØ Ãß°¡
+using UnityEngine.SceneManagement; // (ï¿½ß¿ï¿½) ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 
 [RequireComponent(typeof(Collider2D))]
 public class InteractableDoor : MonoBehaviour, IInteractable
@@ -9,56 +9,56 @@ public class InteractableDoor : MonoBehaviour, IInteractable
     [Header("Door Settings")]
     public string requiredKeyID = "BossRoomKey";
     public string doorFlag = "Door_BossRoom_Opened";
-    [Tooltip("'ÀÔÀåÇÑ´Ù'¸¦ ¼±ÅÃÇßÀ» ¶§ ÀÌµ¿ÇÒ ¾ÀÀÇ ÀÌ¸§")]
-    public string sceneToLoad = "BossStage_1"; // (ÀÌµ¿ÇÒ ¾À ÀÌ¸§)
+    [Tooltip("'ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½")]
+    public string sceneToLoad = "BossStage_1"; // (ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½)
 
     [Header("Dialogue")]
     public DialogueData lockedDialogue;
     public DialogueData unlockDialogue;
 
     [Header("Choice UI References")]
-    [Tooltip("1´Ü°è¿¡¼­ ¸¸µç ¼±ÅÃÁö ÆÐ³Î (ChoicePanel)")]
+    [Tooltip("1ï¿½Ü°è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ (ChoicePanel)")]
     public GameObject choicePanel;
-    [Tooltip("Ä¿¼­ ¿ªÇÒÀ» ÇÒ Selector Icon ÀÌ¹ÌÁö")]
+    [Tooltip("Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Selector Icon ï¿½Ì¹ï¿½ï¿½ï¿½")]
     public RectTransform selectorIcon;
-    [Tooltip("Ã¹ ¹øÂ° ¼±ÅÃÁö(ÀÔÀåÇÑ´Ù)ÀÇ Transform")]
+    [Tooltip("Ã¹ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½)ï¿½ï¿½ Transform")]
     public RectTransform choiceEnterPosition;
-    [Tooltip("µÎ ¹øÂ° ¼±ÅÃÁö(³ª°£´Ù)ÀÇ Transform")]
+    [Tooltip("ï¿½ï¿½ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ Transform")]
     public RectTransform choiceLeavePosition;
 
     private bool isShowingChoices = false;
-    private int currentChoice = 0; // 0: ÀÔÀåÇÑ´Ù, 1: ³ª°£´Ù
+    private int currentChoice = 0; // 0: ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½, 1: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // IInteractable ÀÎÅÍÆäÀÌ½º ±¸Çö
+    // IInteractable ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void Interact(PlayerInteraction interactor, PlayerHealth health)
     {
-        if (isShowingChoices) return; // ÀÌ¹Ì ¼±ÅÃÁö°¡ ¶° ÀÖÀ¸¸é ¹«½Ã
+        if (isShowingChoices) return; // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         if (FlagManager.Instance.CheckFlag(doorFlag))
         {
-            // ÀÌ¹Ì ¿­¸° ¹® (¹Ù·Î ÀÔÀå ·ÎÁ÷)
-            // (°£¼ÒÈ­: ÀÌ ¿¹Á¦¿¡¼­´Â ¿­¸° ¹®Àº ±×³É Åë°ú(ºñÈ°¼ºÈ­)µÈ °ÍÀ¸·Î °¡Á¤)
-            Debug.Log("ÀÌ¹Ì ¿­¸° ¹®ÀÔ´Ï´Ù.");
+            // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+            // (ï¿½ï¿½ï¿½ï¿½È­: ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×³ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½È°ï¿½ï¿½È­)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+            Debug.Log("ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
             return;
         }
 
         if (InventoryManager.Instance.HasKey(requiredKeyID))
         {
-            // Å°°¡ ÀÖÀ½ -> ¹® ¿­±â ´ëÈ­ ½ÃÀÛ
+            // Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
             if (unlockDialogue != null)
             {
                 DialogueManager.Instance.StartDialogue(unlockDialogue, health);
-                // (Áß¿ä) ´ëÈ­°¡ ³¡³ª¸é OpenDoor°¡ ¾Æ´Ñ ShowChoices¸¦ È£Ãâ
+                // (ï¿½ß¿ï¿½) ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ OpenDoorï¿½ï¿½ ï¿½Æ´ï¿½ ShowChoicesï¿½ï¿½ È£ï¿½ï¿½
                 DialogueManager.Instance.OnDialogueFinished += ShowChoices;
             }
             else
             {
-                ShowChoices(health); // ´ë»ç ¾øÀ¸¸é ¹Ù·Î ¼±ÅÃÁö
+                ShowChoices(health); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
         else
         {
-            // Å°°¡ ¾øÀ½ -> 'Àá±è' ´ë»ç Ãâ·Â
+            // Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -> 'ï¿½ï¿½ï¿½' ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             if (lockedDialogue != null)
             {
                 DialogueManager.Instance.StartDialogue(lockedDialogue, health);
@@ -67,7 +67,7 @@ public class InteractableDoor : MonoBehaviour, IInteractable
     }
 
     /// <summary>
-    /// (½Å±Ô) ´ëÈ­°¡ ³¡³­ ÈÄ ¼±ÅÃÁö UI¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.
+    /// (ï¿½Å±ï¿½) ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Õ´Ï´ï¿½.
     /// </summary>
     private void ShowChoices(PlayerHealth healthContext)
     {
@@ -75,40 +75,29 @@ public class InteractableDoor : MonoBehaviour, IInteractable
 
         if (choicePanel == null)
         {
-            Debug.LogError("ChoicePanelÀÌ InteractableDoor¿¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogError("ChoicePanelï¿½ï¿½ InteractableDoorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½!");
             return;
         }
 
         choicePanel.SetActive(true);
         isShowingChoices = true;
-        currentChoice = 0; // Ç×»ó 'ÀÔÀåÇÑ´Ù'¿¡¼­ ½ÃÀÛ
+        currentChoice = 0; 
         UpdateSelectorPosition();
 
-        // (Áß¿ä) InputManager¿¡ '¼±ÅÃ ¸ðµå'ÀÓÀ» ¾Ë¸²
         InputManager.Instance.SetChoiceMenuState(true);
 
-        // (¼±ÅÃ »çÇ×) Ä¿¼­(¸¶¿ì½º)¸¦ Ç¥½ÃÇÒÁö ¿©ºÎ
-        // Cursor.visible = true;
-        // Cursor.lockState = CursorLockMode.None;
     }
-
-    /// <summary>
-    /// (½Å±Ô) ¼±ÅÃÁö ÀÔ·ÂÀ» ¹Þ±â À§ÇÑ Update ÇÔ¼ö
-    /// </summary>
     private void Update()
     {
         if (!isShowingChoices)
         {
-            return; // ¼±ÅÃÁö°¡ È°¼ºÈ­µÈ »óÅÂ°¡ ¾Æ´Ï¸é Á¾·á
+            return;
         }
-
-        // '¿£ÅÍ' Å° ÀÔ·Â
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Space))
         {
             HandleChoice();
         }
 
-        // 'À§' ¶Ç´Â '¾Æ·¡' Å° ÀÔ·Â
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             currentChoice = (currentChoice + 1) % 2; // 0 -> 1, 1 -> 0
@@ -116,14 +105,10 @@ public class InteractableDoor : MonoBehaviour, IInteractable
         }
     }
 
-    /// <summary>
-    /// (½Å±Ô) ¼±ÅÃÁö UIÀÇ Ä¿¼­(SelectorIcon) À§Ä¡¸¦ ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.
-    /// </summary>
     private void UpdateSelectorPosition()
     {
         if (selectorIcon == null) return;
 
-        // (ÁÖÀÇ) RectTransformÀÇ positionÀ» Á÷Á¢ ´ëÀÔÇØ¾ß ÇÕ´Ï´Ù.
         if (currentChoice == 0)
         {
             selectorIcon.position = choiceEnterPosition.position;
@@ -135,45 +120,45 @@ public class InteractableDoor : MonoBehaviour, IInteractable
     }
 
     /// <summary>
-    /// (½Å±Ô) '¿£ÅÍ' Å°¸¦ ´­·¶À» ¶§ È£ÃâµË´Ï´Ù.
+    /// (ï¿½Å±ï¿½) 'ï¿½ï¿½ï¿½ï¿½' Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ë´Ï´ï¿½.
     /// </summary>
     private void HandleChoice()
     {
-        // 1. UI ¹× »óÅÂ ºñÈ°¼ºÈ­
+        // 1. UI ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         isShowingChoices = false;
         choicePanel.SetActive(false);
         InputManager.Instance.SetChoiceMenuState(false);
         // Cursor.visible = false;
         // Cursor.lockState = CursorLockMode.Locked;
 
-        // 2. ¼±ÅÃ Ã³¸®
-        if (currentChoice == 0) // "ÀÔÀåÇÑ´Ù"
+        // 2. ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+        if (currentChoice == 0) // "ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½"
         {
-            Debug.Log("'ÀÔÀåÇÑ´Ù' ¼±ÅÃ!");
+            Debug.Log("'ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½' ï¿½ï¿½ï¿½ï¿½!");
             OpenDoorAndLoadScene();
         }
-        else // "³ªÁß¿¡ °£´Ù"
+        else // "ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½"
         {
-            Debug.Log("'³ªÁß¿¡ °£´Ù' ¼±ÅÃ!");
-            // ±×³É ´Ý±â (¾Æ¹«°Íµµ ¾È ÇÔ)
+            Debug.Log("'ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½' ï¿½ï¿½ï¿½ï¿½!");
+            // ï¿½×³ï¿½ ï¿½Ý±ï¿½ (ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ ï¿½ï¿½)
         }
     }
 
     /// <summary>
-    /// (¼öÁ¤) ¹®À» ¿­°í ¾ÀÀ» ·ÎµåÇÕ´Ï´Ù.
+    /// (ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½Õ´Ï´ï¿½.
     /// </summary>
     private void OpenDoorAndLoadScene()
     {
-        Debug.Log($"¹® ({requiredKeyID})ÀÌ ¿­·È½À´Ï´Ù! {sceneToLoad} ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.");
+        Debug.Log($"ï¿½ï¿½ ({requiredKeyID})ï¿½ï¿½ ï¿½ï¿½ï¿½È½ï¿½ï¿½Ï´ï¿½! {sceneToLoad} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Õ´Ï´ï¿½.");
 
-        // 1. ÇÃ·¡±× ¼³Á¤ (´Ù½Ã Àá±âÁö ¾Êµµ·Ï)
+        // 1. ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½)
         FlagManager.Instance.SetFlag(doorFlag);
 
-        // 2. ¹® ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­ (¼±ÅÃ »çÇ×, ¾ÀÀÌ ¹Ù²î¸é ÀÇ¹Ì ¾øÀ½)
+        // 2. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½Ç¹ï¿½ ï¿½ï¿½ï¿½ï¿½)
         gameObject.SetActive(false);
 
-        // 3. ¾À ÀÌµ¿
-        // (Áß¿ä) "File > Build Settings..."¿¡ ÀÌµ¿ÇÒ ¾ÀÀÌ µî·ÏµÇ¾î ÀÖ¾î¾ß ÇÕ´Ï´Ù.
+        // 3. ï¿½ï¿½ ï¿½Ìµï¿½
+        // (ï¿½ß¿ï¿½) "File > Build Settings..."ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ÏµÇ¾ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.
         SceneManager.LoadScene(sceneToLoad);
     }
 }

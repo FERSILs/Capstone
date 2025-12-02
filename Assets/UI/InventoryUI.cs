@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÀÎº¥Åä¸® UI ÆÐ³Î ÀüÃ¼¸¦ °ü¸®ÇÕ´Ï´Ù. (Åä±Û, ½½·Ô ºä °»½Å)
+/// ï¿½Îºï¿½ï¿½ä¸® UI ï¿½Ð³ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. (ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 /// </summary>
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance;
 
     [Header("UI References")]
-    public GameObject inventoryPanel; // ÀÎº¥Åä¸® ÀüÃ¼ ÆÐ³Î
-    public Transform slotContainer; // ½½·Ô ºä(ÇÁ¸®ÆÕ)µéÀÌ »ý¼ºµÉ ºÎ¸ð Transform
+    public GameObject inventoryPanel; // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½Ã¼ ï¿½Ð³ï¿½
+    public Transform slotContainer; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ Transform
 
     [Header("Prefabs")]
-    public GameObject slotViewPrefab; // 1´Ü°è¿¡¼­ ¸¸µç SlotView°¡ ºÙ¾îÀÖ´Â ÇÁ¸®ÆÕ
+    public GameObject slotViewPrefab; // 1ï¿½Ü°è¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ SlotViewï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // °ü¸®ÇÒ ¸ðµç ½½·Ô ºäµé
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     private List<InventorySlotView> slotViews = new List<InventorySlotView>();
 
     private void Awake()
@@ -24,19 +24,19 @@ public class InventoryUI : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // ÀÎº¥Åä¸® ÆÐ³ÎÀ» ²ö »óÅÂ·Î ½ÃÀÛ
+        // ï¿½Îºï¿½ï¿½ä¸® ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
         inventoryPanel.SetActive(false);
     }
 
     private void Start()
     {
-        // InventoryManager°¡ ÁØºñµÇ±æ ±â´Ù¸° ÈÄ ½½·Ô »ý¼º
+        // InventoryManagerï¿½ï¿½ ï¿½Øºï¿½Ç±ï¿½ ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         InitializeSlots();
     }
 
     private void Update()
     {
-        // 'I' Å°·Î ÀÎº¥Åä¸® Åä±Û
+        // 'I' Å°ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.I))
         {
             Toggle();
@@ -44,29 +44,29 @@ public class InventoryUI : MonoBehaviour
     }
 
     /// <summary>
-    /// InventoryManagerÀÇ µ¥ÀÌÅÍ¿¡ ¸ÂÃç UI ½½·Ô ºä¸¦ »ý¼ºÇÕ´Ï´Ù.
+    /// InventoryManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ ï¿½ä¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     /// </summary>
     private void InitializeSlots()
     {
-        // InventoryManagerÀÇ µ¥ÀÌÅÍ ½½·ÔÀ» ¼øÈ¸
+        // InventoryManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
         foreach (InventorySlot dataSlot in InventoryManager.Instance.slots)
         {
-            // 1. ½½·Ô UI ÇÁ¸®ÆÕ »ý¼º
+            // 1. ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameObject slotObj = Instantiate(slotViewPrefab, slotContainer);
 
-            // 2. ½½·Ô ºä ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+            // 2. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             InventorySlotView view = slotObj.GetComponent<InventorySlotView>();
 
-            // 3. ½½·Ô ºä°¡ ¾î¶² µ¥ÀÌÅÍ¸¦ Ç¥½ÃÇÒÁö ¿¬°áÇÏ°í, UI °»½Å
+            // 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ä°¡ ï¿½î¶² ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½, UI ï¿½ï¿½ï¿½ï¿½
             view.UpdateSlot(dataSlot);
 
-            // 4. °ü¸® ¸ñ·Ï¿¡ Ãß°¡
+            // 4. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ï¿ï¿½ ï¿½ß°ï¿½
             slotViews.Add(view);
         }
     }
 
     /// <summary>
-    /// ÀÎº¥Åä¸® UI¸¦ ÄÑ°í ²ü´Ï´Ù.
+    /// ï¿½Îºï¿½ï¿½ä¸® UIï¿½ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½.
     /// </summary>
     public void Toggle()
     {
@@ -75,25 +75,25 @@ public class InventoryUI : MonoBehaviour
 
         InputManager.Instance.SetInventoryState(isActive);
 
-        // NEXT_STEPS.md DÇ×¸ñ: ÀÎº¥Åä¸® ¿­ ¶§ °ÔÀÓ ÀÏ½ÃÁ¤Áö (¼±ÅÃ »çÇ×)
+        // NEXT_STEPS.md Dï¿½×¸ï¿½: ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         // Time.timeScale = isActive ? 0f : 1f;
 
-        // InputManager°¡ ÀÖ´Ù¸é ÀÔ·Â Àá±Ý (¼±ÅÃ »çÇ×)
+        // InputManagerï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         // InputManager.Instance.SetInventoryState(isActive);
     }
 
     /// <summary>
-    /// Æ¯Á¤ ÀÎµ¦½ºÀÇ ½½·Ô UI¸¸ °»½ÅÇÕ´Ï´Ù.
-    /// (InventoryManager°¡ È£ÃâÇÒ ÇÔ¼ö)
+    /// Æ¯ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+    /// (InventoryManagerï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½)
     /// </summary>
     public void UpdateSlotByIndex(int index)
     {
         if (index < 0 || index >= slotViews.Count) return;
 
-        // InventoryManager¿¡¼­ ÃÖ½Å µ¥ÀÌÅÍ °¡Á®¿À±â
+        // InventoryManagerï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         InventorySlot updatedData = InventoryManager.Instance.slots[index];
 
-        // ÇØ´ç UI °»½Å
+        // ï¿½Ø´ï¿½ UI ï¿½ï¿½ï¿½ï¿½
         slotViews[index].UpdateSlot(updatedData);
     }
 }

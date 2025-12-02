@@ -1,11 +1,11 @@
 // InventorySlotView.cs
 using UnityEngine;
-using UnityEngine.UI; // Image¸¦ »ç¿ëÇÏ±â À§ÇØ
-using TMPro; // TextMeshPro¸¦ »ç¿ëÇÏ±â À§ÇØ
+using UnityEngine.UI; // Imageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½
+using TMPro; // TextMeshProï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 /// <summary>
-/// ÀÎº¥Åä¸® ½½·Ô 'ÇÏ³ª'ÀÇ UI Ç¥½Ã¸¦ ´ã´çÇÕ´Ï´Ù.
-/// (ÀÌ ½ºÅ©¸³Æ®´Â '½½·Ô ÇÁ¸®ÆÕ'¿¡ ºÙ½À´Ï´Ù)
+/// ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ 'ï¿½Ï³ï¿½'ï¿½ï¿½ UI Ç¥ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+/// (ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½ ï¿½Ù½ï¿½ï¿½Ï´ï¿½)
 /// </summary>
 public class InventorySlotView : MonoBehaviour
 {
@@ -13,11 +13,11 @@ public class InventorySlotView : MonoBehaviour
     public Image iconImage;
     public TextMeshProUGUI amountText;
 
-    private InventorySlot currentSlotData; // ÀÌ UI°¡ ÇöÀç Ç¥½Ã ÁßÀÎ µ¥ÀÌÅÍ
+    private InventorySlot currentSlotData; // ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     /// <summary>
-    /// ÀÌ ½½·Ô UI¸¦ Æ¯Á¤ µ¥ÀÌÅÍ·Î °»½ÅÇÕ´Ï´Ù.
-    /// (InventoryUI°¡ ÀÌ ÇÔ¼ö¸¦ È£ÃâÇÕ´Ï´Ù)
+    /// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+    /// (InventoryUIï¿½ï¿½ ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Õ´Ï´ï¿½)
     /// </summary>
     public void UpdateSlot(InventorySlot slotData)
     {
@@ -25,18 +25,18 @@ public class InventorySlotView : MonoBehaviour
 
         if (currentSlotData.IsEmpty())
         {
-            // 1. ½½·ÔÀÌ ºñ¾îÀÖÀ» ¶§
+            // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             iconImage.sprite = null;
-            iconImage.color = new Color(0, 0, 0, 0); // ¿ÏÀü Åõ¸í
+            iconImage.color = new Color(0, 0, 0, 0); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             amountText.text = "";
         }
         else
         {
-            // 2. ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ÀÖÀ» ¶§
+            // 2. ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             iconImage.sprite = currentSlotData.itemData.icon;
-            iconImage.color = Color.white; // ºÒÅõ¸í
+            iconImage.color = Color.white; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-            // 3. ¼ö·® Ç¥½Ã (°ãÄ¥ ¼ö ÀÖ°í 1°³º¸´Ù ¸¹À» ¶§¸¸)
+            // 3. ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ (ï¿½ï¿½Ä¥ ï¿½ï¿½ ï¿½Ö°ï¿½ 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
             if (currentSlotData.itemData.isStackable && currentSlotData.amount > 1)
             {
                 amountText.text = $"x{currentSlotData.amount}";
